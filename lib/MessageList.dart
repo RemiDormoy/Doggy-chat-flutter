@@ -22,7 +22,7 @@ class MessageListState extends State<MessageList> {
 
         var messageDocuments = snapshot.data.documents;
         messageDocuments
-            .sort((a, b) => b.data["time"].compareTo(a.data["time"]));
+            .sort((a, b) => DateTime.parse(b.data["time"]).compareTo(DateTime.parse(a.data["time"])));
         final scrollContainer = ScrollController(initialScrollOffset: 0.0);
         var listView = ListView(
           padding: const EdgeInsets.only(top: 20.0),
@@ -41,24 +41,39 @@ class MessageListState extends State<MessageList> {
     final message = Message.fromSnapshot(data);
     final date = formater.format(DateTime.parse(message.time));
 
+    BoxDecoration boxDecoration;
+    EdgeInsets edgeInsets;
+    if (message.sender != "Rémi iOS") {
+      edgeInsets = EdgeInsets.fromLTRB(16.0, 16.0, 80.0, 16.0);
+      boxDecoration = BoxDecoration(
+        color: Colors.green,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25.0),
+            topRight: Radius.circular(25.0),
+            bottomRight: Radius.circular(25.0),
+            bottomLeft: Radius.zero),
+      );
+    } else {
+      edgeInsets = EdgeInsets.fromLTRB(80.0, 16.0, 16.0, 16.0);
+      boxDecoration = BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25.0),
+            topRight: Radius.circular(25.0),
+            bottomLeft: Radius.circular(25.0),
+            bottomRight: Radius.zero),
+      );
+    }
+
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Padding(
             key: ValueKey(message.id),
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: edgeInsets,
             child: Container(
-              decoration: BoxDecoration(
-                color: Colors.green,
-                border: Border.all(color: Colors.green),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25.0),
-                    topRight: Radius.circular(25.0),
-                    bottomLeft: Radius.circular(25.0),
-                    bottomRight: Radius.zero),
-              ),
+              decoration: boxDecoration,
               child: ListTile(
                 title: Text(message.content),
                 trailing: Text(message.sender),
