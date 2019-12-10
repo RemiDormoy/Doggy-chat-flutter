@@ -1,6 +1,7 @@
+import 'package:doggy_chat/MessageList.dart';
 import 'package:doggy_chat/RandomWord.dart';
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,16 +14,22 @@ class MyApp extends StatelessWidget {
           appBar: AppBar(
             title: Text('Doggy chat'),
           ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Center(
-                child: Text('Zobby la mouche'),
-              ),
-              RandomWords(),
-            ],
-          ),
+          body: Stack(children: <Widget>[
+            SvgPicture.asset(
+              "assets/backrgounddoggychat.svg",
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Center(
+                  child: Text('Zobby la mouche'),
+                ),
+                MessageList(),
+                Text('  ')
+              ],
+            ),
+          ]),
         ));
   }
 }
