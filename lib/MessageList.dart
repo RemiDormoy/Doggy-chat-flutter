@@ -32,11 +32,6 @@ class MessageListState extends State<MessageList> {
               .map((data) => buildMessage(context, data))
               .toList(),
         );
-        /*Future.delayed(const Duration(milliseconds: 500), () {
-          setState(() {
-            scrollContainer.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.ease);
-          });
-        });*/
         return listView;
       },
     );
@@ -90,7 +85,6 @@ class Message {
 
   Message.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['time'] != null),
-        assert(map['id'] != null),
         content = map['content'] ?? "image",
         sender = map['sender'] ?? "pas de sender",
         time = map['time'],
