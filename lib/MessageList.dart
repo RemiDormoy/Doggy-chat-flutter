@@ -21,7 +21,8 @@ class MessageListState extends State<MessageList> {
         if (!snapshot.hasData) return LinearProgressIndicator();
 
         var messageDocuments = snapshot.data.documents;
-        messageDocuments.sort((a, b) => b.data["time"].compareTo(a.data["time"]));
+        messageDocuments
+            .sort((a, b) => b.data["time"].compareTo(a.data["time"]));
         final scrollContainer = ScrollController(initialScrollOffset: 0.0);
         var listView = ListView(
           padding: const EdgeInsets.only(top: 20.0),
@@ -55,8 +56,13 @@ class MessageListState extends State<MessageList> {
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(5.0),
+                color: Colors.green,
+                border: Border.all(color: Colors.green),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25.0),
+                    topRight: Radius.circular(25.0),
+                    bottomLeft: Radius.circular(25.0),
+                    bottomRight: Radius.zero),
               ),
               child: ListTile(
                 title: Text(message.content),

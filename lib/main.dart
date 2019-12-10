@@ -1,4 +1,5 @@
 import 'package:doggy_chat/MessageList.dart';
+import 'package:doggy_chat/MessageSender.dart';
 import 'package:doggy_chat/RandomWord.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,11 +23,12 @@ class MyApp extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                Center(
-                  child: Text('Zobby la mouche'),
-                ),
                 MessageList(),
-                Text('  ')
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: MessageSender(),
+                ),
+                Text('  '),
               ],
             ),
           ]),
