@@ -7,6 +7,12 @@ class MessageListState extends State<MessageList> {
 
   final formater = DateFormat('d MMMM yyyy - H:m');
 
+  String username;
+
+  MessageListState(String username) {
+    this.username = username;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -43,7 +49,7 @@ class MessageListState extends State<MessageList> {
 
     BoxDecoration boxDecoration;
     EdgeInsets edgeInsets;
-    if (message.sender != "Rémi iOS") {
+    if (message.sender != username) {
       edgeInsets = EdgeInsets.fromLTRB(16.0, 16.0, 80.0, 16.0);
       boxDecoration = BoxDecoration(
         color: Colors.green,
@@ -86,8 +92,14 @@ class MessageListState extends State<MessageList> {
 }
 
 class MessageList extends StatefulWidget {
+  String username;
+
+  MessageList(String username) {
+    this.username = username;
+  }
+
   @override
-  MessageListState createState() => MessageListState();
+  MessageListState createState() => MessageListState(username);
 }
 
 class Message {

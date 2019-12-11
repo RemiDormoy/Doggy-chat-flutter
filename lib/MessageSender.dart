@@ -3,11 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class MessageSender extends StatefulWidget {
+
+  String username;
+
+  MessageSender(String username) {
+    this.username = username;
+  }
+
   @override
   MessageSenderState createState() => MessageSenderState();
 }
 
 class MessageSenderState extends State<MessageSender> {
+
+  String username;
+
+  MessageSenderState(String username) {
+    this.username = username;
+  }
+
   TextEditingController textEditingController;
 
   @override
@@ -29,7 +43,7 @@ class MessageSenderState extends State<MessageSender> {
     final formated = DateFormat("yyyy-MM-dd HH:mm:ss").format(date);
     final message = {
       "content": input,
-      "sender": "Rémi iOS",
+      "sender": username,
       "time": formated,
       "type": "message",
     };

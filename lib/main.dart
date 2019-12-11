@@ -1,6 +1,4 @@
-import 'package:doggy_chat/MessageList.dart';
-import 'package:doggy_chat/MessageSender.dart';
-import 'package:doggy_chat/RandomWord.dart';
+import 'package:doggy_chat/MessageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -19,19 +17,10 @@ class MyApp extends StatelessWidget {
             SvgPicture.asset(
               "assets/backrgounddoggychat.svg",
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                MessageList(),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: MessageSender(),
-                ),
-                Text('  '),
-              ],
-            ),
+            MessageScreen("Rémi"),
           ]),
         ));
   }
 }
+
+
