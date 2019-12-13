@@ -11,7 +11,7 @@ class MessageSender extends StatefulWidget {
   }
 
   @override
-  MessageSenderState createState() => MessageSenderState();
+  MessageSenderState createState() => MessageSenderState(username);
 }
 
 class MessageSenderState extends State<MessageSender> {
