@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "237114950965",
+    "firebase_url": "https://doggy-chat.firebaseio.com",
+    "project_id": "doggy-chat",
+    "storage_bucket": "doggy-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:237114950965:android:c42c2f121eb9aceb32787c",
+        "android_client_info": {
+          "package_name": "com.octo.rdo.doggy_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "237114950965-niu6sehjl26jd5ble3rqiqvumnjhcs83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFCb7QYufqtba6utT-h0Gq0rMMng-CEHw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "237114950965-te4prvsa0k3pitsibchse5hjf6gpjgvo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "237114950965-4e43k64d6qhb7645p7jvufri6ic0hgh0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.octo.rdo.doggyChat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
