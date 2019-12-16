@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doggy_chat/DoggiesRepository.dart';
+import 'package:doggy_chat/Doggy.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -27,8 +29,8 @@ class MessageListState extends State<MessageList> {
         if (!snapshot.hasData) return LinearProgressIndicator();
 
         var messageDocuments = snapshot.data.documents;
-        messageDocuments
-            .sort((a, b) => DateTime.parse(b.data["time"]).compareTo(DateTime.parse(a.data["time"])));
+        messageDocuments.sort((a, b) => DateTime.parse(b.data["time"])
+            .compareTo(DateTime.parse(a.data["time"])));
         final scrollContainer = ScrollController(initialScrollOffset: 0.0);
         var listView = ListView(
           padding: const EdgeInsets.only(top: 20.0),
@@ -47,10 +49,18 @@ class MessageListState extends State<MessageList> {
     final message = Message.fromSnapshot(data);
     final date = formater.format(DateTime.parse(message.time));
 
+    final List<Doggy> doggies = DoggiesRepository.instance.doggies;
+
+    final image = doggies
+        .firstWhere((lol) => lol.surnom == message.sender,
+            orElse: () => Doggy.chacalAnonyme())
+        .photo;
+
     BoxDecoration boxDecoration;
     EdgeInsets edgeInsets;
+    Row row;
     if (message.sender != username) {
-      edgeInsets = EdgeInsets.fromLTRB(16.0, 16.0, 80.0, 16.0);
+      edgeInsets = EdgeInsets.fromLTRB(16.0, 16.0, 60.0, 16.0);
       boxDecoration = BoxDecoration(
         color: Colors.green,
         borderRadius: BorderRadius.only(
@@ -59,8 +69,28 @@ class MessageListState extends State<MessageList> {
             bottomRight: Radius.circular(25.0),
             bottomLeft: Radius.zero),
       );
+      row = Row(children: <Widget>[
+        Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 8.0, 0),
+            child: Container(
+            width: 60.0,
+            height: 60.0,
+            decoration: new BoxDecoration(
+                shape: BoxShape.circle,
+                image: new DecorationImage(
+                    fit: BoxFit.fill, image: new NetworkImage(image))))),
+        Expanded(
+          child: Container(
+            decoration: boxDecoration,
+            child: ListTile(
+              title: Text(message.sender),
+              trailing: Text(message.content),
+            ),
+          ),
+        ),
+      ]);
     } else {
-      edgeInsets = EdgeInsets.fromLTRB(80.0, 16.0, 16.0, 16.0);
+      edgeInsets = EdgeInsets.fromLTRB(60.0, 16.0, 16.0, 16.0);
       boxDecoration = BoxDecoration(
         color: Colors.blue,
         borderRadius: BorderRadius.only(
@@ -69,8 +99,29 @@ class MessageListState extends State<MessageList> {
             bottomLeft: Radius.circular(25.0),
             bottomRight: Radius.zero),
       );
+      row = Row(children: <Widget>[
+        Expanded(
+          child: Container(
+            decoration: boxDecoration,
+            child: ListTile(
+              title: Text(message.sender),
+              trailing: Text(message.content),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 0, 0, 0),
+          child: SizedBox(
+              width: 60.0,
+              height: 60.0,
+              child: Container(
+                  decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: new DecorationImage(
+                          fit: BoxFit.fill, image: new NetworkImage(image))))),
+        ),
+      ]);
     }
-
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -78,13 +129,7 @@ class MessageListState extends State<MessageList> {
           Padding(
             key: ValueKey(message.id),
             padding: edgeInsets,
-            child: Container(
-              decoration: boxDecoration,
-              child: ListTile(
-                title: Text(message.content),
-                trailing: Text(message.sender),
-              ),
-            ),
+            child: row,
           ),
           Center(child: Text(date)),
         ]);

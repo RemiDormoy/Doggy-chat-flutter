@@ -37,7 +37,7 @@ class Doggy {
       nom: '',
       prenom: '',
       surnom: 'Chacal Anonyme',
-      photo: '',
+      photo: 'https://image.flaticon.com/icons/png/512/206/206887.png',
       tribu: '',
       mail: '',
       signeParticulier: '',
