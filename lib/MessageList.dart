@@ -73,18 +73,23 @@ class MessageListState extends State<MessageList> {
         Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 8.0, 0),
             child: Container(
-            width: 60.0,
-            height: 60.0,
-            decoration: new BoxDecoration(
-                shape: BoxShape.circle,
-                image: new DecorationImage(
-                    fit: BoxFit.fill, image: new NetworkImage(image))))),
+                width: 60.0,
+                height: 60.0,
+                decoration: new BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: new DecorationImage(
+                        fit: BoxFit.fill, image: new NetworkImage(image))))),
         Expanded(
           child: Container(
             decoration: boxDecoration,
-            child: ListTile(
-              title: Text(message.sender),
-              trailing: Text(message.content),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: <Widget>[Text(message.sender, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)), Expanded(child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 0, 0, 0),
+                  child: Text(message.content),
+                ))],
+              ),
             ),
           ),
         ),
@@ -102,10 +107,16 @@ class MessageListState extends State<MessageList> {
       row = Row(children: <Widget>[
         Expanded(
           child: Container(
+            height: 60.0,
             decoration: boxDecoration,
-            child: ListTile(
-              title: Text(message.sender),
-              trailing: Text(message.content),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: <Widget>[Expanded(child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 8.0, 0),
+                  child: Text(message.content),
+                )), Text(message.sender, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))],
+              ),
             ),
           ),
         ),
