@@ -27,6 +27,9 @@ dependencies:
   english_words: ^3.1.0
   firebase_core: ^0.4.0+9
   cloud_firestore: ^0.12.9+5
+  firebase_messaging: ^6.0.9
+  firebase_auth: ^0.15.2
+  google_sign_in: ^4.1.0
   intl: ^0.16.0
   flutter_svg: ^0.15.0
 
@@ -34,6 +37,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.7.3"
+
+flutter_icons:
+  android: "logo_doggy_skool"
+  ios: true
+  image_path: "assets/icon.png"
 
 
 # For information on the generic Dart part of this file, see the
