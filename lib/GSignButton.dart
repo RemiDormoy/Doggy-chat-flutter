@@ -9,7 +9,6 @@ import 'MessageScreen.dart';
 
 @provide
 class GSignButton extends StatefulWidget {
-
   @override
   GSignButtonState createState() => GSignButtonState();
 }
@@ -29,8 +28,10 @@ class GSignButtonState extends State<GSignButton> {
         'openid',
         'profile',
         "https://www.googleapis.com/auth/cloud-platform",
+        'https://www.googleapis.com/auth/contacts.readonly',
       ],
     );
+    signIn.signInSilently();
     return Center(
       child: Ink(
         decoration: const ShapeDecoration(
@@ -47,29 +48,38 @@ class GSignButtonState extends State<GSignButton> {
   }
 
   void gsign() {
-    signIn.signIn().then((account) => {
-          print(account),
-          signIn.currentUser.authentication.then((auth) async {
-            final doggies = await DoggiesRepository.instance.getDoggies(auth.idToken);
-            final surnom = doggies
-                .firstWhere((lol) => lol.mail == signIn.currentUser.email,
-                    orElse: () => Doggy.chacalAnonyme())
-                .surnom;
-            Navigator.push(context,
-                MaterialPageRoute<void>(builder: (BuildContext context) {
-              return Scaffold(
-                appBar: AppBar(
-                  title: Text('Doggy chat'),
+    signIn.signIn().then((account) async {
+      var isSigned = await signIn.isSignedIn();
+      if (isSigned) {
+        print(account);
+        signIn.currentUser.authentication.then((auth) async {
+          final doggies =
+              await DoggiesRepository.instance.getDoggies(auth.idToken);
+          final surnom = doggies
+              .firstWhere((lol) => lol.mail == signIn.currentUser.email,
+                  orElse: () => Doggy.chacalAnonyme())
+              .surnom;
+          Navigator.push(context,
+              MaterialPageRoute<void>(builder: (BuildContext context) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text('Doggy chat'),
+              ),
+              body: Stack(children: <Widget>[
+                SvgPicture.asset(
+                  "assets/backrgounddoggychat.svg",
                 ),
-                body: Stack(children: <Widget>[
-                  SvgPicture.asset(
-                    "assets/backrgounddoggychat.svg",
-                  ),
-                  MessageScreen(surnom),
-                ]),
-              );
-            }));
-          })
+                MessageScreen(surnom),
+              ]),
+            );
+          }));
         });
+      } else {
+        print("le mec n'est pas signed in");
+      }
+    }).catchError((error) => {
+      print(error),
+      print("y a une erreur dans le login")
+    });
   }
 }

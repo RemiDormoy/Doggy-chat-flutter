@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "237114950965-7rkhg22vtsrku0b56vp969q8dlss210h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.octo.rdo.doggy_chat",
+            "certificate_hash": "534897c8d10e22bcb821a36a39a5663e88912176"
+          }
+        },
+        {
           "client_id": "237114950965-niu6sehjl26jd5ble3rqiqvumnjhcs83.apps.googleusercontent.com",
           "client_type": 3
         }
