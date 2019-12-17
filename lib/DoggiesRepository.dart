@@ -20,7 +20,7 @@ class DoggiesRepository {
         HttpLogger(logLevel: LogLevel.BODY),
       ]);
       final response = await httpClient
-          .get('http://localhost:8080/doggies', headers: {'id_token': idToken});
+          .get('http://69d9ebeb.ngrok.io/doggies', headers: {'id_token': idToken});
       Iterable decode = json.decode(response.body);
       doggies = decode.map((doggy) => Doggy.fromJson(doggy)).toList();
     }

@@ -31,7 +31,6 @@ class GSignButtonState extends State<GSignButton> {
         'https://www.googleapis.com/auth/contacts.readonly',
       ],
     );
-    signIn.signInSilently();
     return Center(
       child: Ink(
         decoration: const ShapeDecoration(
@@ -53,33 +52,38 @@ class GSignButtonState extends State<GSignButton> {
       if (isSigned) {
         print(account);
         signIn.currentUser.authentication.then((auth) async {
-          final doggies =
-              await DoggiesRepository.instance.getDoggies(auth.idToken);
-          final surnom = doggies
-              .firstWhere((lol) => lol.mail == signIn.currentUser.email,
-                  orElse: () => Doggy.chacalAnonyme())
-              .surnom;
-          Navigator.push(context,
-              MaterialPageRoute<void>(builder: (BuildContext context) {
-            return Scaffold(
-              appBar: AppBar(
-                title: Text('Doggy chat'),
-              ),
-              body: Stack(children: <Widget>[
-                SvgPicture.asset(
-                  "assets/backrgounddoggychat.svg",
+          try {
+            final doggies =
+                await DoggiesRepository.instance.getDoggies(auth.idToken);
+            final surnom = doggies
+                .firstWhere((lol) => lol.mail == signIn.currentUser.email,
+                    orElse: () => Doggy.chacalAnonyme())
+                .surnom;
+            Navigator.push(context,
+                MaterialPageRoute<void>(builder: (BuildContext context) {
+              return Scaffold(
+                appBar: AppBar(
+                  title: Text('Doggy chat'),
                 ),
-                MessageScreen(surnom),
-              ]),
-            );
-          }));
+                body: Stack(children: <Widget>[
+                  SvgPicture.asset(
+                    "assets/backrgounddoggychat.svg",
+                  ),
+                  MessageScreen(surnom),
+                ]),
+              );
+            }));
+          } catch (e) {
+            signIn.signOut();
+          }
         });
       } else {
         print("le mec n'est pas signed in");
       }
     }).catchError((error) => {
-      print(error),
-      print("y a une erreur dans le login")
-    });
+          print(error),
+          print("y a une erreur dans le login"),
+          signIn.signOut()
+        });
   }
 }
