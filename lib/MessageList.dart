@@ -26,7 +26,7 @@ class MessageListState extends State<MessageList> {
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('messages').snapshots(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) return LinearProgressIndicator();
+        if (!snapshot.hasData) return CircularProgressIndicator();
 
         var messageDocuments = snapshot.data.documents;
         messageDocuments.sort((a, b) => DateTime.parse(b.data["time"])
@@ -59,6 +59,9 @@ class MessageListState extends State<MessageList> {
     BoxDecoration boxDecoration;
     EdgeInsets edgeInsets;
     Row row;
+    Widget messageToDisplay;
+    messageToDisplay = getMessage(message, messageToDisplay);
+
     if (message.sender != username) {
       edgeInsets = EdgeInsets.fromLTRB(16.0, 16.0, 60.0, 16.0);
       boxDecoration = BoxDecoration(
@@ -78,17 +81,15 @@ class MessageListState extends State<MessageList> {
                 decoration: new BoxDecoration(
                     shape: BoxShape.circle,
                     image: new DecorationImage(
-                        fit: BoxFit.fill, image: new NetworkImage(image))))),
+                        fit: BoxFit.contain, image: new NetworkImage(image))))),
         Expanded(
           child: Container(
             decoration: boxDecoration,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: <Widget>[Text(message.sender, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)), Expanded(child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 0, 0, 0),
-                  child: Text(message.content),
-                ))],
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 0, 0, 0),
+                child: messageToDisplay,
               ),
             ),
           ),
@@ -110,14 +111,11 @@ class MessageListState extends State<MessageList> {
             height: 60.0,
             decoration: boxDecoration,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: <Widget>[Expanded(child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 8.0, 0),
-                  child: Text(message.content),
-                )), Text(message.sender, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))],
-              ),
-            ),
+                  child: messageToDisplay,
+                )),
           ),
         ),
         Padding(
@@ -129,7 +127,7 @@ class MessageListState extends State<MessageList> {
                   decoration: new BoxDecoration(
                       shape: BoxShape.circle,
                       image: new DecorationImage(
-                          fit: BoxFit.fill, image: new NetworkImage(image))))),
+                          fit: BoxFit.contain, image: new NetworkImage(image))))),
         ),
       ]);
     }
@@ -144,6 +142,22 @@ class MessageListState extends State<MessageList> {
           ),
           Center(child: Text(date)),
         ]);
+  }
+
+  Widget getMessage(Message message, Widget messageToDisplay) {
+    if (message.type == "image") {
+      messageToDisplay = Container(
+          width: 140.0,
+          height: 140.0,
+          decoration: new BoxDecoration(
+              shape: BoxShape.rectangle,
+              image: new DecorationImage(
+                  fit: BoxFit.contain,
+                  image: new NetworkImage(message.imageUrl))));
+    } else {
+      messageToDisplay = Text(message.content);
+    }
+    return messageToDisplay;
   }
 }
 
@@ -163,6 +177,7 @@ class Message {
   final String id;
   final String sender;
   final String time;
+  final String imageUrl;
   final String type;
   final DocumentReference reference;
 
@@ -172,6 +187,7 @@ class Message {
         sender = map['sender'] ?? "pas de sender",
         time = map['time'],
         type = map['type'],
+        imageUrl = map['imageUrl'] ?? "pas d'image",
         id = map['id'];
 
   Message.fromSnapshot(DocumentSnapshot snapshot)

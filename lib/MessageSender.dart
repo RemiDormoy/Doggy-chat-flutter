@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doggy_chat/SendMessageNotificationRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -48,6 +49,7 @@ class MessageSenderState extends State<MessageSender> {
       "type": "message",
     };
     textEditingController.value = TextEditingValue(text: "");
+    SendMessageNotificationRepository.getInstance().sendMessage(input);
     await Firestore.instance.collection('messages').document().setData(message);
   }
 }

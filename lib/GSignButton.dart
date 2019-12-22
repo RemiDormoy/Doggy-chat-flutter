@@ -1,4 +1,6 @@
 import 'package:doggy_chat/DoggiesRepository.dart';
+import 'package:doggy_chat/FCMTokenRepository.dart';
+import 'package:doggy_chat/UserRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -53,12 +55,15 @@ class GSignButtonState extends State<GSignButton> {
         print(account);
         signIn.currentUser.authentication.then((auth) async {
           try {
+            UserRepository.instance.setIdToken(auth.idToken);
             final doggies =
                 await DoggiesRepository.instance.getDoggies(auth.idToken);
-            final surnom = doggies
-                .firstWhere((lol) => lol.mail == signIn.currentUser.email,
-                    orElse: () => Doggy.chacalAnonyme())
-                .surnom;
+            var currentUser = doggies.firstWhere(
+                (lol) => lol.mail == signIn.currentUser.email,
+                orElse: () => Doggy.chacalAnonyme());
+            UserRepository.instance.setUser(currentUser);
+            final surnom = currentUser.surnom;
+            FCMTokenRepository().getToken();
             Navigator.push(context,
                 MaterialPageRoute<void>(builder: (BuildContext context) {
               return Scaffold(

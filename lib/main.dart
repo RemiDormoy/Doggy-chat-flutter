@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:doggy_chat/DoggiesRepository.dart';
 import 'package:doggy_chat/GSignButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Doggy chat',
       home: Scaffold(
         appBar: AppBar(
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
             Column(children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Text('Entre ton blaze mon jeune'),
+                child: Text('Entre ton yolo mon jeune'),
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
