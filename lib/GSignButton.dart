@@ -1,5 +1,6 @@
 import 'package:doggy_chat/DoggiesRepository.dart';
 import 'package:doggy_chat/FCMTokenRepository.dart';
+import 'package:doggy_chat/SendTokenRepository.dart';
 import 'package:doggy_chat/UserRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -63,7 +64,8 @@ class GSignButtonState extends State<GSignButton> {
                 orElse: () => Doggy.chacalAnonyme());
             UserRepository.instance.setUser(currentUser);
             final surnom = currentUser.surnom;
-            FCMTokenRepository().getToken();
+            FCMTokenRepository().getToken().then((token) =>
+                {SendTokenRepository.getInstance().sendToken(token)});
             Navigator.push(context,
                 MaterialPageRoute<void>(builder: (BuildContext context) {
               return Scaffold(

@@ -29,7 +29,7 @@ class SendMessageNotificationRepository {
     var body2 = {
       'sender': userRepository.getCurrentUser().trigramme,
       'title':
-          userRepository.getCurrentUser().surnom + "t'as envoyé un message",
+          userRepository.getCurrentUser().surnom + " t'a envoyé un message",
       'message': message
     };
     httpClient.post('http://localhost:8080/notify', headers: {
