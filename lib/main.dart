@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:doggy_chat/GSignButton.dart';
+import 'package:doggy_chat/UserRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -12,6 +13,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    UserRepository.instance.init();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Doggy chat',
