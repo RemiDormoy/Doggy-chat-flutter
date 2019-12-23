@@ -32,7 +32,7 @@ class SendMessageNotificationRepository {
           userRepository.getCurrentUser().surnom + " t'a envoyé un message",
       'message': message
     };
-    httpClient.post('http://localhost:8080/notify', headers: {
+    httpClient.post('http://ec2-user@ec2-35-180-100-132.eu-west-3.compute.amazonaws.com/notify', headers: {
       'id_token': userRepository.idToken,
       'Content-Type': 'application/json',
     }, body: jsonEncode(body2));

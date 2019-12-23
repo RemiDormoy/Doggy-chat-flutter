@@ -29,7 +29,7 @@ class SendTokenRepository {
       'sender': userRepository.getCurrentUser().trigramme,
       'token': token
     };
-    httpClient.post('http://localhost:8080/notify/tokens',
+    httpClient.post('http://ec2-user@ec2-35-180-100-132.eu-west-3.compute.amazonaws.com/notify/tokens',
         headers: {
           'id_token': userRepository.idToken,
           'Content-Type': 'application/json',

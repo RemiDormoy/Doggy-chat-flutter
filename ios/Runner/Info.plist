@@ -26,6 +26,12 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need to access images to be able to send them to your fellow doggies</string>
+	<key>NSMicrophoneUsageDescription</key>
+    <string>We need to access microphones to be able to send audios to your fellow doggies</string>
+    <key>NSCameraUsageDescription</key>
+    <string>We need to access camera to be able to send photos to your fellow doggies</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

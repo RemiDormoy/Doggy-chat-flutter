@@ -108,7 +108,6 @@ class MessageListState extends State<MessageList> {
       row = Row(children: <Widget>[
         Expanded(
           child: Container(
-            height: 60.0,
             decoration: boxDecoration,
             child: Padding(
                 padding: const EdgeInsets.all(16.0),
