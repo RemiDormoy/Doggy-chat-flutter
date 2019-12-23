@@ -26,6 +26,8 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSFaceIDUsageDescription</key>
+    <string>We need fingerprint to connect you faster to the doggy-verse</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need to access images to be able to send them to your fellow doggies</string>
 	<key>NSMicrophoneUsageDescription</key>
