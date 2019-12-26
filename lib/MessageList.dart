@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggy_chat/DoggiesRepository.dart';
 import 'package:doggy_chat/Doggy.dart';
@@ -81,7 +82,7 @@ class MessageListState extends State<MessageList> {
                 decoration: new BoxDecoration(
                     shape: BoxShape.circle,
                     image: new DecorationImage(
-                        fit: BoxFit.contain, image: new NetworkImage(image))))),
+                        fit: BoxFit.contain, image: new CachedNetworkImageProvider(image))))),
         Expanded(
           child: Container(
             decoration: boxDecoration,
@@ -126,7 +127,7 @@ class MessageListState extends State<MessageList> {
                   decoration: new BoxDecoration(
                       shape: BoxShape.circle,
                       image: new DecorationImage(
-                          fit: BoxFit.contain, image: new NetworkImage(image))))),
+                          fit: BoxFit.contain, image: new CachedNetworkImageProvider(image))))),
         ),
       ]);
     }
@@ -146,13 +147,13 @@ class MessageListState extends State<MessageList> {
   Widget getMessage(Message message, Widget messageToDisplay) {
     if (message.type == "image") {
       messageToDisplay = Container(
-          width: 140.0,
-          height: 140.0,
-          decoration: new BoxDecoration(
-              shape: BoxShape.rectangle,
-              image: new DecorationImage(
-                  fit: BoxFit.contain,
-                  image: new NetworkImage(message.imageUrl))));
+        width: 140.0,
+        height: 140.0,
+        child: CachedNetworkImage(
+          placeholder: (context, url) => CircularProgressIndicator(),
+          imageUrl: message.imageUrl,
+        ),
+      );
     } else {
       messageToDisplay = Text(message.content);
     }

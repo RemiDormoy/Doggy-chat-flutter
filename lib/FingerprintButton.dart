@@ -16,10 +16,16 @@ class FingerprintButton extends StatefulWidget {
 }
 
 class FingerprintButtonState extends State<FingerprintButton> {
+  bool hasRetry = false;
+
   @override
   Widget build(BuildContext context) {
     var idToken2 = UserRepository.instance.idToken;
-    UserRepository.instance.refreshIdToken().then((token) => {setState(() => {})});
+    if (idToken2 == null && hasRetry == false) {
+      UserRepository.instance.refreshIdToken().then((token) => {
+            setState(() => {this.hasRetry = true})
+          });
+    }
     print("l'id token c'est : " + idToken2.toString());
     bool haveIdToken = idToken2 != null;
     if (haveIdToken) {

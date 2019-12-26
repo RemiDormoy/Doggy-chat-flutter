@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggy_chat/SendMessageNotificationRepository.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -50,12 +51,11 @@ class MessageSenderState extends State<MessageSender> {
             child: Container(
                 width: 50.0,
                 height: 50.0,
+                child: CachedNetworkImage(
+                  imageUrl: "https://image.flaticon.com/icons/png/512/1409/1409157.png",
+                ),
                 decoration: new BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: new DecorationImage(
-                        fit: BoxFit.scaleDown,
-                        image: new NetworkImage(
-                            "https://image.flaticon.com/icons/png/512/1409/1409157.png")))),
+                    shape: BoxShape.rectangle,)),
           ),
         )
       ],
